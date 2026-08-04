@@ -163,8 +163,8 @@
         @media (max-width: 600px) {
             .dashboard { grid-template-columns: 1fr; gap: 15px; }
             .card { padding: 20px 10px; }
-            .counter-wrap { gap: 40px; } /* توسيع المسافة بين الزراير على الموبايل لسهولة الضغط */
-            .btn-counter { width: 65px; height: 65px; font-size: 35px; } /* تكبير زراير العداد للموبايل */
+            .counter-wrap { gap: 40px; } 
+            .btn-counter { width: 65px; height: 65px; font-size: 35px; } 
         }
     </style>
 </head>
@@ -180,13 +180,11 @@
             </div>
             
             <div class="controls">
-                <!-- زر مدمج -->
                 <button id="mainBtn" class="btn-circle play-state" onclick="toggleStopwatch()">
                     <span id="mainIcon">▶</span>
                     <span id="mainText">بدء</span>
                 </button>
                 
-                <!-- زر التصفير -->
                 <button id="resetBtn" class="btn-circle btn-reset" onclick="resetStopwatch()">
                     <span>↻</span>
                     <span>تصفير</span>
@@ -201,7 +199,7 @@
             <div class="counter-wrap">
                 <button class="btn-counter" onclick="updateCounter('mistakes', -1)">-</button>
                 <div class="counter-val val-red" id="mistakes">0</div>
-                <button class="btn-counter" onclick="updateCounter('mistakes', 1)">+</button>
+                <button class="btn-counter" onclick="updateCounter('mistakes', 1)">+</button> 
             </div>
         </div>
 
@@ -213,6 +211,7 @@
                 <div class="counter-val val-cyan" id="prompts">0</div>
                 <button class="btn-counter" onclick="updateCounter('prompts', 1)">+</button>
             </div>
+            <p class="hint" style="margin-top: 15px; font-size: 15px;">💡 ملحوظة: التنبيه لا يُحتسب من المرة الأولى للسرعة</p>
         </div>
     </div>
 
@@ -231,7 +230,6 @@
         function toggleStopwatch() {
             animateButton(mainBtn);
             if (!isRunning) {
-                // التشغيل
                 startTime = new Date().getTime() - difference;
                 tInterval = setInterval(updateTime, 10);
                 isRunning = true;
@@ -241,11 +239,9 @@
                 mainIcon.innerHTML = '⏸';
                 mainText.innerHTML = 'إيقاف';
                 
-                // تأثير الإضاءة
                 mainCard.classList.remove('paused-glow');
                 mainCard.classList.add('running-glow');
             } else {
-                // الإيقاف
                 clearInterval(tInterval);
                 isRunning = false;
                 
@@ -254,7 +250,6 @@
                 mainIcon.innerHTML = '▶';
                 mainText.innerHTML = 'إكمال';
                 
-                // تأثير الإضاءة
                 mainCard.classList.remove('running-glow');
                 mainCard.classList.add('paused-glow');
             }
@@ -292,27 +287,22 @@
             display.innerHTML = hours + ':' + minutes + ':' + seconds + '<span class="ms">.' + milliseconds + '</span>';
         }
 
-        // === تأثير حركة الأزرار بالكيبورد ===
         function animateButton(btn) {
             btn.style.transform = "scale(0.85)";
             setTimeout(() => btn.style.transform = "scale(1)", 150);
         }
 
-        // === اختصارات الكيبورد (المسطرة وحرف R) ===
         document.addEventListener('keydown', function(event) {
-            // المسطرة للتشغيل والإيقاف
             if (event.code === 'Space') {
                 event.preventDefault(); 
                 toggleStopwatch();
             }
-            // حرف R للتصفير (سواء كابيتال أو سمول)
             if (event.key.toLowerCase() === 'r' || event.key.toLowerCase() === 'ث') {
                 event.preventDefault();
                 resetStopwatch();
             }
         });
 
-        // === برمجة العدادات ===
         let scores = { mistakes: 0, prompts: 0 };
         function updateCounter(type, value) {
             scores[type] += value;
@@ -321,7 +311,6 @@
             let el = document.getElementById(type);
             el.innerText = scores[type];
             
-            // حركة النبض للرقم
             el.style.transform = "scale(1.4)";
             setTimeout(() => el.style.transform = "scale(1)", 150);
         }
